@@ -1,0 +1,111 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Cairo', sans-serif;
+    direction: rtl;
+    background: #f8fafc;
+    color: #1e293b;
+    scroll-behavior: smooth;
+    transition: all 0.3s ease;
+}
+
+body.dark { background: #0f172a; color: #f1f5f9; }
+
+/* Navigation */
+nav {
+    position: sticky; top: 0; display: flex; justify-content: space-between; align-items: center;
+    background: #fff; padding: 0.8rem 5%; border-bottom: 4px solid #ff9800; z-index: 1000;
+}
+body.dark nav { background: #1e293b; border-color: #f59e0b; }
+
+.nav-profile { height: 45px; border-radius: 8px; border: 2px solid #ff9800; }
+nav h2 { color: #ff9800; font-size: 1.1rem; }
+
+nav ul { display: flex; list-style: none; gap: 8px; }
+
+nav ul li a {
+    text-decoration: none;
+    color: inherit;
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+nav ul li a:hover {
+    border: 2px solid #ff9800;
+    color: #ff9800;
+}
+
+body.dark nav ul li a:hover {
+    border-color: #f59e0b;
+    color: #f59e0b;
+}
+
+#darkModeBtn { padding: 0.5rem 1rem; border-radius: 20px; border: none; background: #ff9800; color: white; cursor: pointer; font-weight: bold; }
+
+/* Header */
+header {
+    text-align: center; padding: 5rem 1rem;
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1500');
+    background-size: cover; background-position: center; border-radius: 20px; margin: 20px 5%; color: white;
+}
+.profile-img { width: 120px; height: 120px; border-radius: 50%; border: 4px solid #ff9800; margin-bottom: 1rem; background: white; object-fit: contain; }
+
+/* Sections & Images */
+section { max-width: 900px; margin: 30px auto; padding: 2rem; background: #fff; border-radius: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+body.dark section { background: #1e293b; }
+section h2 { color: #ff9800; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px; }
+
+.section-img {
+    width: 100%; height: 350px; overflow: hidden; border-radius: 15px;
+    margin-bottom: 1.5rem; border: 4px solid #ff9800; background: #eee;
+}
+body.dark .section-img { border-color: #f59e0b; }
+.section-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* Copy Card */
+.copy-box {
+    display: flex; justify-content: space-between; align-items: center; background: #f1f5f9;
+    padding: 1rem; border-radius: 12px; margin-top: 15px; border: 1px solid #e2e8f0;
+}
+body.dark .copy-box { background: #0f172a; border-color: #334155; }
+.copy-btn { background: #ff9800; color: white; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: bold; font-family: 'Cairo'; }
+
+/* Services Card */
+#servicesContainer { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; }
+.service-card { background: #fff8e1; padding: 1.5rem; border-radius: 15px; border-right: 5px solid #ff9800; text-align: center; }
+body.dark .service-card { background: #334155; }
+
+/* Form & Price Note */
+form input, form select, form textarea { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 10px; border: 1px solid #ddd; font-family: 'Cairo'; }
+body.dark form input, body.dark form select, body.dark form textarea { background: #0f172a; color: white; border-color: #334155; }
+
+.price-note {
+    background: #fff3e0;
+    color: #e65100;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    border-right: 4px solid #ff9800;
+}
+body.dark .price-note { background: #433116; color: #ffb74d; }
+
+.order-btn { background: #22c55e; color: white; width: 100%; padding: 14px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+.order-btn:hover { background: #16a34a; }
+
+/* Footer */
+footer { text-align: center; padding: 3rem; opacity: 0.7; }
+#scrollTopBtn { position: fixed; bottom: 25px; left: 25px; display: none; background: #ff9800; color: white; border: none; border-radius: 50%; width: 45px; height: 45px; cursor: pointer; z-index: 1000; }
+
+@media (max-width: 850px) {
+    nav { flex-direction: column; gap: 15px; padding: 1rem; }
+    nav ul { flex-wrap: wrap; justify-content: center; font-size: 0.75rem; }
+    .section-img { height: 220px; }
+}

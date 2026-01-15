@@ -1,0 +1,22 @@
+{
+  "name": "الأزهري للخدمات الرقمية والبرمجة الاحترافية",
+  "short_name": "الأزهري",
+  "description": "منصة الأزهري تقدم خدمات تصميم وبرمجة ومشاريع رقمية عالية الجودة، مع دعم كامل للعملاء",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#ff9800",
+  "theme_color": "#ff9800",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "assets/شعار.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/شعار.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
