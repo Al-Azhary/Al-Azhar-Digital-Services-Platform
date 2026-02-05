@@ -33,7 +33,6 @@ darkBtn.addEventListener("click", () => {
 
 // وظيفة النسخ
 function copyText(type) {
-    // تم تحديث الرقم هنا أيضاً
     const textToCopy = type === "email" ? "abdelwhabhany62@gmail.com" : "+966575477323";
     navigator.clipboard.writeText(textToCopy).then(() => {
         const msg = document.getElementById(type + "Message");
@@ -44,7 +43,7 @@ function copyText(type) {
     });
 }
 
-// إرسال واتساب (تحديث الرقم وتنسيق الأسطر)
+// إرسال واتساب (تحديث لإضافة كود الخصم)
 const orderForm = document.getElementById("orderForm");
 if (orderForm) {
     orderForm.onsubmit = (e) => {
@@ -53,21 +52,27 @@ if (orderForm) {
         const service = document.getElementById("orderService").value;
         const details = document.getElementById("orderDetails").value;
         
+        // جلب قيمة كود الخصم، وإذا كان فارغاً نكتب "لا يوجد"
+        const discount = document.getElementById("discountCode").value.trim() || "لا يوجد";
+        
         // رسالة منظمة في أسطر منفصلة
         // %0A تعني سطر جديد في رابط الواتساب
         const finalMsg = `طلب خدمة جديد من المنصة:%0A` +
                          `الاسم: ${name}%0A` +
-                         ` الخدمة: ${service}%0A` +
-                         ` التفاصيل: ${details}%0A` +
-                         ` الدفع: كاش %0A` +
-                         ` السعر: يحدد بعد الطلب`;
+                         `الخدمة: ${service}%0A` +
+                         `التفاصيل: ${details}%0A` +
+                         `كود الخصم: ${discount}%0A` +
+                         `الدفع: كاش%0A` +
+                         `السعر: يحدد بعد الطلب`;
 
-        // تم تحديث الرقم إلى 966575477323
-        window.open(`https://wa.me/966575477323?text=${finalMsg}`, "_blank");
+        // رقم الواتساب: 966575477323
+        window.open(`https://wa.me/966502069445?text=${finalMsg}`, "_blank");
     };
 }
 
 // زر الصعود
 const scrollTopBtn = document.getElementById("scrollTopBtn");
-window.onscroll = () => { if (scrollTopBtn) scrollTopBtn.style.display = window.scrollY > 400 ? "block" : "none"; };
+window.onscroll = () => { 
+    if (scrollTopBtn) scrollTopBtn.style.display = window.scrollY > 400 ? "block" : "none"; 
+};
 if (scrollTopBtn) scrollTopBtn.onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
