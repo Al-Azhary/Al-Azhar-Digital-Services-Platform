@@ -59,6 +59,7 @@ if (orderForm) {
         // %0A تعني سطر جديد في رابط الواتساب
         const finalMsg = `طلب خدمة جديد من المنصة:%0A` +
                          `الاسم: ${name}%0A` +
+                         `البريد الاكتروني: ${document.getElementById("orderEmail").value}%0A` +
                          `الخدمة: ${service}%0A` +
                          `التفاصيل: ${details}%0A` +
                          `كود الخصم: ${discount}%0A` +
