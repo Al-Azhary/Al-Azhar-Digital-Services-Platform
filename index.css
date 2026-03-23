@@ -109,3 +109,18 @@ footer { text-align: center; padding: 3rem; opacity: 0.7; }
     nav ul { flex-wrap: wrap; justify-content: center; font-size: 0.75rem; }
     .section-img { height: 220px; }
 }
+.nav-brand-area {
+    display: flex;
+    flex-direction: column;
+}
+
+#paymentInfoBox p {
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+}
+
+/* تنسيق للوضع الليلي لصندوق الدفع */
+body.dark #paymentInfoBox {
+    background: #1a1a1a;
+    border-color: #f59e0b;
+}
