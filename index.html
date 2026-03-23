@@ -23,6 +23,9 @@
 <nav>
     <h2>منصة الأزهري للخدمات الرقمية</h2>
     <img src="assets/شعار.png" class="nav-profile" alt="شعار المنصة">
+        <div class="nav-brand-area">
+        <small style="color: #ff9800; font-weight: bold; display: block; font-size: 0.7rem;">ساعات العمل: 10 ص - 10 م</small>
+    </div>
     <ul>
         <li><i class="bi bi-info-circle"></i> <a href="#about">من نحن</a></li>
         <li><i class="bi bi-tools"></i> <a href="#skills">المهارات</a></li>
@@ -36,9 +39,19 @@
 
 <!-- Header -->
 <header>
-    <img src="assets/شعار.png" alt="صورة شخصية" class="profile-img">
+    <img src="assets/شعار.png" alt="شعار المنصة" class="profile-img">
     <h1>منصة الأزهري للخدمات الرقمية والبرمجة الاحترافية</h1>
-    <p><i class="bi bi-code-square"></i> مطوّر ومصمّم مهتم بالتقنيات والبرمجة الاحترافية</p>
+    
+    <!-- كلمة لائقة للمنصة -->
+    <p style="font-size: 1.2rem; font-weight: 600; margin-bottom: 10px;">
+        <i class="bi bi-stars"></i> إبداعٌ يلامس طموحكم، وحلولٌ تقنية ترسم مستقبلكم
+    </p>
+
+    <!-- وقت الدوام -->
+    <div style="display: inline-block; background: rgba(255, 152, 0, 0.2); padding: 8px 25px; border-radius: 50px; border: 1px solid #ff9800; margin-top: 15px;">
+        <i class="bi bi-clock-history"></i> 
+        <span style="font-weight: bold;">ساعات العمل الرسمية:</span> 10:00 صباحاً — 10:00 مساءً
+    </div>
 </header>
 
 <!-- من نحن -->
@@ -142,14 +155,59 @@
         </select>
 
         <label for="orderDetails"><i class="bi bi-card-text"></i> مواصفات الطلب *</label>
-        <textarea id="orderDetails" required placeholder="اكتب مواصفات الخدمة المطلوبة"></textarea>
+        <textarea id="orderDetails" required placeholder="اكتب تقاصيل طلبك"></textarea>
 
         <!-- الحقل الجديد: كود الخصم (اختياري) -->
         <label for="discountCode"><i class="bi bi-ticket-perforated"></i> كود الخصم (اختياري)</label>
         <input type="text" id="discountCode" placeholder="أدخل كود الخصم إن وجد">
 
-        <!-- تنبيه السعر -->
+        <label>طريقة الدفع المفضل *</label>
+    <select id="paymentMethod" required onchange="togglePaymentInfo()">
+        <option value="">اختر طريقة الدفع</option>
+        <option value="كاش">كاش (في الموقع المحدد)</option>
+        <option value="تحويل">تحويل بنكي</option>
+    </select>
+
+        <!-- صناديق معلومات الدفع والإقرارات الخاصة -->
+    <div id="paymentInfoBox" style="display: none; background: #fff9f0; padding: 15px; border-radius: 10px; border: 1px solid #ff9800; margin-bottom: 10px;">
+        <!-- حالة الكاش -->
+        <div id="cashBox" style="display: none;">
+            <p>موقع استلام الكاش:</p>
+            <a href="https://maps.app.goo.gl/NNq3dBu3brMEhbs6A" target="_blank" style="color: #2563eb; font-weight: bold;"> <i class="bi bi-geo-alt-fill"></i> اضغط هنا لفتح الخريطة</a>
+            <label style="display: flex; align-items: center; gap: 8px; margin-top: 10px; color: #d32f2f; font-size: 0.85rem;">
+                <input type="checkbox" id="cashAgree"> أقر بالالتزام بالدفع في الموقع المحدد أعلاه.
+            </label>
+        </div>
+
+        <!-- حالة التحويل -->
+        <div id="transferBox" style="display: none;">
+            <p style="color: #d32f2f; font-weight: bold;">يرجى إرفاق صورة الإيصال بعد الإرسال.</p>
+            <label style="display: flex; align-items: center; gap: 8px; margin-top: 10px; color: #d32f2f; font-size: 0.85rem;">
+                <input type="checkbox" id="transferAgree"> أتعهد بإرسال صورة إيصال التحويل فوراً عبر واتساب.
+            </label>
+        </div>
+
+        <!-- حالة البطاقة -->
+        <div id="cardBox" style="display: none;">
+            <p>رقم البطاقة المعتمد:</p>
+            <b style="font-size: 1.1rem; letter-spacing: 1px;">5294156406084172</b>
+        </div>
+    </div>
+
+    <!-- الإقرار العام بالدفع قبل الاستلام (دائم الظهور) -->
+    <div style="background: #fff5f5; padding: 12px; border-radius: 8px; margin-bottom: 10px; border: 1px solid #feb2b2;">
+        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-weight: bold; font-size: 0.9rem; color: #c53030;">
+            <input type="checkbox" id="generalAgree" required> أقر بموافقتي على دفع السعر كاملاً قبل استلام الطلب.
+        </label>
+    </div>
+
+
+    <!-- تنبيه السعر -->
         <p class="price-note"><i class="bi bi-tag"></i> السعر يحدد بعد الطلب</p>
+
+    <div style="background: #fff5f5; color: #c53030; padding: 15px; border-radius: 10px; border-right: 5px solid #c53030; margin: 15px 0; font-weight: bold; font-size: 0.9rem;">
+        <i class="bi bi-exclamation-triangle-fill"></i> تنبيه: السعر يدفع كاملاً قبل استلام الطلب.
+    </div>
 
         <button type="submit" class="order-btn">
             <i class="bi bi-whatsapp"></i> إرسال عبر واتساب
