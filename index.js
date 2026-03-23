@@ -44,29 +44,62 @@ function copyText(type) {
 }
 
 // إرسال واتساب (تحديث لإضافة كود الخصم)
+// 1. تبديل واجهة الدفع وإدارة إلزامية المربعات
+function togglePaymentInfo() {
+    const method = document.getElementById("paymentMethod").value;
+    document.getElementById("paymentInfoBox").style.display = method ? "block" : "none";
+    
+    // إظهار الصناديق
+    const cashBox = document.getElementById("cashBox");
+    const transferBox = document.getElementById("transferBox");
+    const cardBox = document.getElementById("cardBox");
+    
+    cashBox.style.display = method === "كاش" ? "block" : "none";
+    transferBox.style.display = method === "تحويل" ? "block" : "none";
+    cardBox.style.display = method === "بطاقة" ? "block" : "none";
+
+    // جعل المربعات مطلوبة فقط عند اختيار نوع الدفع الخاص بها
+    document.getElementById("cashAgree").required = (method === "كاش");
+    document.getElementById("transferAgree").required = (method === "تحويل");
+}
+
+// 2. معالجة الإرسال للواتساب
 const orderForm = document.getElementById("orderForm");
 if (orderForm) {
     orderForm.onsubmit = (e) => {
         e.preventDefault();
+        
         const name = document.getElementById("orderName").value;
         const service = document.getElementById("orderService").value;
         const details = document.getElementById("orderDetails").value;
-        
-        // جلب قيمة كود الخصم، وإذا كان فارغاً نكتب "لا يوجد"
+        const payment = document.getElementById("paymentMethod").value;
         const discount = document.getElementById("discountCode").value.trim() || "لا يوجد";
-        
-        // رسالة منظمة في أسطر منفصلة
-        // %0A تعني سطر جديد في رابط الواتساب
-        const finalMsg = `طلب خدمة جديد من المنصة:%0A` +
+
+        // تجهيز نصوص الإقرارات للرسالة
+        let agreementsText = `✅ أقر بالدفع كاملاً قبل الاستلام.%0A`;
+        let payMsg = `طريقة الدفع: ${payment}`;
+
+        if (payment === "كاش") {
+            payMsg += `%0Aموقع استلام الكاش: https://maps.app.goo.gl/NNq3dBu3brMEhbs6A`;
+            agreementsText += `✅ أقر بالدفع في الموقع المحدد.`;
+        } else if (payment === "تحويل") {
+            payMsg += `%0A(سأقوم بإرفاق صورة التحويل الآن)`;
+            agreementsText += `✅ أتعهد بإرسال إيصال التحويل.`;
+        } else if (payment === "بطاقة") {
+            payMsg += `%0Aرقم البطاقة المستخدم: 5294156406084172`;
+        }
+
+        const finalMsg = `*طلب خدمة جديد من المنصة*%0A` +
+                         `----------------------------%0A` +
                          `الاسم: ${name}%0A` +
-                         `البريد الاكتروني: ${document.getElementById("orderEmail").value}%0A` +
                          `الخدمة: ${service}%0A` +
                          `التفاصيل: ${details}%0A` +
                          `كود الخصم: ${discount}%0A` +
-                         `الدفع: كاش%0A` +
-                         `السعر: يحدد بعد الطلب`;
+                         `${payMsg}%0A` +
+                         `----------------------------%0A` +
+                         `*الإقرارات:*%0A${agreementsText}%0A` +
+                         `*وقت العمل:* 10:00 ص - 10:00 م`;
 
-        // رقم الواتساب: 966575477323
         window.open(`https://wa.me/966502069445?text=${finalMsg}`, "_blank");
     };
 }
