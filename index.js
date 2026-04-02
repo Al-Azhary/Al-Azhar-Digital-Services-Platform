@@ -1,6 +1,5 @@
 /**
  * دالة لتعيين الصور لمرة واحدة عند التحميل
- * صور تقنية احترافية بدون وجود أشخاص
  */
 function initializeAppImages() {
     const staticImages = {
@@ -20,50 +19,49 @@ function initializeAppImages() {
     }
 }
 
-// تنفيذ الدالة فور تحميل الموقع
 window.addEventListener('DOMContentLoaded', initializeAppImages);
 
 // تبديل الوضع الليلي
 const darkBtn = document.getElementById("darkModeBtn");
-darkBtn.addEventListener("click", () => {
-    document.body.classList.toggle("dark");
-    const isDark = document.body.classList.contains("dark");
-    darkBtn.innerHTML = isDark ? '<i class="bi bi-sun"></i> وضع نهاري' : '<i class="bi bi-moon"></i> وضع ليلي';
-});
+if(darkBtn) {
+    darkBtn.addEventListener("click", () => {
+        document.body.classList.toggle("dark");
+        const isDark = document.body.classList.contains("dark");
+        darkBtn.innerHTML = isDark ? 'وضع نهاري' : 'وضع ليلي';
+    });
+}
 
 // وظيفة النسخ
 function copyText(type) {
-    const textToCopy = type === "email" ? "abdelwhabhany62@gmail.com" : "+966575477323";
+    const textToCopy = type === "email" ? "abdelwhabhany62@gmail.com" : "+966502069445";
     navigator.clipboard.writeText(textToCopy).then(() => {
         const msg = document.getElementById(type + "Message");
         if (msg) {
-            msg.textContent = "✓ تم النسخ";
+            msg.textContent = "تم النسخ بنجاح";
             setTimeout(() => msg.textContent = "", 2000);
         }
     });
 }
 
-// إرسال واتساب (تحديث لإضافة كود الخصم)
-// 1. تبديل واجهة الدفع وإدارة إلزامية المربعات
+// إدارة واجهة الدفع
 function togglePaymentInfo() {
     const method = document.getElementById("paymentMethod").value;
-    document.getElementById("paymentInfoBox").style.display = method ? "block" : "none";
+    const infoBox = document.getElementById("paymentInfoBox");
+    if(infoBox) infoBox.style.display = method ? "block" : "none";
     
-    // إظهار الصناديق
     const cashBox = document.getElementById("cashBox");
     const transferBox = document.getElementById("transferBox");
     const cardBox = document.getElementById("cardBox");
     
-    cashBox.style.display = method === "كاش" ? "block" : "none";
-    transferBox.style.display = method === "تحويل" ? "block" : "none";
-    cardBox.style.display = method === "بطاقة" ? "block" : "none";
+    if(cashBox) cashBox.style.display = method === "كاش" ? "block" : "none";
+    if(transferBox) transferBox.style.display = method === "تحويل" ? "block" : "none";
+    if(cardBox) cardBox.style.display = method === "بطاقة" ? "block" : "none";
 
-    // جعل المربعات مطلوبة فقط عند اختيار نوع الدفع الخاص بها
-    document.getElementById("cashAgree").required = (method === "كاش");
-    document.getElementById("transferAgree").required = (method === "تحويل");
+    if(document.getElementById("cashAgree")) document.getElementById("cashAgree").required = (method === "كاش");
+    if(document.getElementById("transferAgree")) document.getElementById("transferAgree").required = (method === "تحويل");
 }
 
-// 2. معالجة الإرسال للواتساب
+// معالجة الإرسال للواتساب بتنسيق رسمي لمنصة الأزهري
 const orderForm = document.getElementById("orderForm");
 if (orderForm) {
     orderForm.onsubmit = (e) => {
@@ -75,31 +73,44 @@ if (orderForm) {
         const payment = document.getElementById("paymentMethod").value;
         const discount = document.getElementById("discountCode").value.trim() || "لا يوجد";
 
-        // تجهيز نصوص الإقرارات للرسالة
-        let agreementsText = `✅ أقر بالدفع كاملاً قبل الاستلام.%0A`;
-        let payMsg = `طريقة الدفع: ${payment}`;
+        // تحديد نوع الطلب
+        const isEdit = service.includes("تعديل");
+        const requestHeader = isEdit ? "نموذج طلب تعديل" : "نموذج طلب خدمة جديدة";
+
+        // تجهيز معلومات الدفع والإقرارات
+        let paymentDetail = `طريقة الدفع: ${payment}`;
+        let legalAgreements = "- الاقرار بالدفع كاملا قبل استلام الطلب.%0A";
 
         if (payment === "كاش") {
-            payMsg += `%0Aموقع استلام الكاش: https://maps.app.goo.gl/NNq3dBu3brMEhbs6A`;
-            agreementsText += `✅ أقر بالدفع في الموقع المحدد.`;
+            paymentDetail += `%0A- موقع استلام المبلغ: https://maps.app.goo.gl/NNq3dBu3brMEhbs6A`;
+            legalAgreements += "- الاقرار بالالتزام بالدفع في الموقع المحدد.";
         } else if (payment === "تحويل") {
-            payMsg += `%0A(سأقوم بإرفاق صورة التحويل الآن)`;
-            agreementsText += `✅ أتعهد بإرسال إيصال التحويل.`;
+            paymentDetail += "%0A- سيتم ارفاق صورة ايصال التحويل الان.";
+            legalAgreements += "- التعهد بارسال ايصال التحويل فورا.";
         } else if (payment === "بطاقة") {
-            payMsg += `%0Aرقم البطاقة المستخدم: 5294156406084172`;
+            paymentDetail += "%0A- رقم البطاقة المعتمد: 5294156406084172";
         }
 
-        const finalMsg = `*طلب خدمة جديد من المنصة*%0A` +
-                         `----------------------------%0A` +
-                         `الاسم: ${name}%0A` +
-                         `الخدمة: ${service}%0A` +
-                         `التفاصيل: ${details}%0A` +
-                         `كود الخصم: ${discount}%0A` +
-                         `${payMsg}%0A` +
-                         `----------------------------%0A` +
-                         `*الإقرارات:*%0A${agreementsText}%0A` +
-                         `*وقت العمل:* 10:00 ص - 10:00 م`;
+        // صياغة الرسالة النهائية باسم المنصة
+        const finalMsg = 
+            `*منصة الأزهري للخدمات الرقمية*%0A` +
+            `----------------------------------%0A` +
+            `*${requestHeader}*%0A` +
+            `----------------------------------%0A` +
+            `الاسم الكامل: ${name}%0A` +
+            `الخدمة المطلوبة: ${service}%0A` +
+            `تفاصيل الطلب: ${details}%0A` +
+            `كود الخصم: ${discount}%0A` +
+            `----------------------------------%0A` +
+            `*بيانات الدفع:*%0A` +
+            `${paymentDetail}%0A` +
+            `----------------------------------%0A` +
+            `*الاقرارات الرسمية:*%0A` +
+            `${legalAgreements}%0A%0A` +
+            `تم الارسال من الموقع الرسمي للمنصة%0A` +
+            `ساعات العمل: 10:00 صباحا - 10:00 مساء`;
 
+        // فتح الواتساب
         window.open(`https://wa.me/966502069445?text=${finalMsg}`, "_blank");
     };
 }
