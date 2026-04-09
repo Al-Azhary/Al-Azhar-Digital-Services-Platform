@@ -33,7 +33,7 @@ if(darkBtn) {
 
 // وظيفة النسخ
 function copyText(type) {
-    const textToCopy = type === "email" ? "alazhariplatform@gmail.com" : "+966502069445";
+    const textToCopy = type === "email" ? "abdelwhabhany62@gmail.com" : "+966502069445";
     navigator.clipboard.writeText(textToCopy).then(() => {
         const msg = document.getElementById(type + "Message");
         if (msg) {
