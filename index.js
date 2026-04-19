@@ -79,7 +79,7 @@ if (orderForm) {
 
         // تجهيز معلومات الدفع والإقرارات
         let paymentDetail = `طريقة الدفع: ${payment}`;
-        let legalAgreements = "- الاقرار بالدفع كاملا قبل استلام الطلب.%0A";
+        let legalAgreements = "- الاقرار بدفع نصف المبلغ قبل استلام الطلب.%0A";
 
         if (payment === "كاش") {
             paymentDetail += `%0A- موقع استلام المبلغ: https://maps.app.goo.gl/NNq3dBu3brMEhbs6A`;
